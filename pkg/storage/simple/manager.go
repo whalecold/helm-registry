@@ -127,8 +127,8 @@ func (sm *SpaceManager) Kind() string {
 
 // Create creates a new Space with space name
 func (sm *SpaceManager) Create(ctx context.Context, space string) (storage.Space, error) {
-	if len(space) >= 255 {
-		return nil, errors.NewResponError(http.StatusBadRequest, "space.name.length", "space ${name} name is too long, should less than 255", errors.M{
+	if len(space) > 32 || len(space) < 2 {
+		return nil, errors.NewResponError(http.StatusBadRequest, "space.name.length", "space ${name} name length error, should between 2 and 32", errors.M{
 			"name": space,
 		})
 	}
